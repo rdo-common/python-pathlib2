@@ -2,7 +2,7 @@
 
 Name:           python-%{modname}
 Version:        2.1.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Object-oriented filesystem paths
 License:        MIT
 URL:            https://github.com/mcmtroffaes/pathlib2/
@@ -69,6 +69,9 @@ done
 %{python3_sitelib}/__pycache__/*
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Thu Dec 22 2016 pcpa <paulo.cesar.pereira.de.andrade@gmail.com> - 2.1.0-2
 - Add %%check.
 - Change URL from pathlib to pathlib2 page.
