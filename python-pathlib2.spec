@@ -2,7 +2,7 @@
 
 Name:           python-%{modname}
 Version:        2.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Object-oriented filesystem paths
 License:        MIT
 URL:            https://github.com/mcmtroffaes/pathlib2/
@@ -81,6 +81,9 @@ done
 %{python3_sitelib}/__pycache__/*
 
 %changelog
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Thu Nov 23 2017 Lumír Balhar <lbalhar@redhat.com> - 2.3.0-1
 - New upstream version
 - Fixed source URL
