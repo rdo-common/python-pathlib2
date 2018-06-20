@@ -1,8 +1,8 @@
 %global modname	pathlib2
 
 Name:           python-%{modname}
-Version:        2.3.0
-Release:        3%{?dist}
+Version:        2.3.2
+Release:        1%{?dist}
 Summary:        Object-oriented filesystem paths
 License:        MIT
 URL:            https://github.com/mcmtroffaes/pathlib2/
@@ -22,9 +22,9 @@ Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{modname}}
 BuildRequires:  python2-devel
 BuildRequires:  python2-mock
+BuildRequires:  python2-pytest
 BuildRequires:  python2-scandir
 BuildRequires:  python2-six
-BuildRequires:  python2-test
 Requires:  python2-scandir
 Requires:  python2-six
 
@@ -37,10 +37,8 @@ Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{modname}}
 BuildRequires:  python3-devel
 BuildRequires:  python3-mock
-BuildRequires:  python3-scandir
+BuildRequires:  python3-pytest
 BuildRequires:  python3-six
-BuildRequires:  python3-test
-Requires:  python3-scandir
 Requires:  python3-six
 
 %description -n python3-%{modname} %{_description}
@@ -59,28 +57,28 @@ Python 3 version.
 %py3_install
 
 %check
-for python in %{__python2} %{__python3}; do
-    for test in test_pathlib2.py test_pathlib2_with_py2_unicode_literals.py; do
-        # LANG has to be set here because otherwise file system encoding is
-        # ANSI_X3.4-1968 by default in mock build
-        LANG=C.utf8 $python $test
-    done
-done
+# LANG has to be set here because otherwise file system encoding is
+# ANSI_X3.4-1968 by default in mock build
+LANG=C.utf8 %{__python2} -m pytest -v tests
+%{__python3} -m pytest -v tests
 
 %files -n python2-%{modname}
 %doc README.rst
 %license LICENSE.rst
-%{python2_sitelib}/%{modname}.py*
+%{python2_sitelib}/%{modname}/
 %{python2_sitelib}/%{modname}-%{version}-py?.?.egg-info
 
 %files -n python3-%{modname}
 %doc README.rst
 %license LICENSE.rst
-%{python3_sitelib}/%{modname}.py*
+%{python3_sitelib}/%{modname}/
 %{python3_sitelib}/%{modname}-%{version}-py?.?.egg-info
-%{python3_sitelib}/__pycache__/*
 
 %changelog
+* Wed Jun 20 2018 Miro Hrončok <mhroncok@redhat.com> - 2.3.2-1
+- Update to 2.3.2 (#1569508)
+- Fix FTBFS (#1556245)
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.3.0-3
 - Rebuilt for Python 3.7
 
