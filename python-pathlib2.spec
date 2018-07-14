@@ -2,7 +2,7 @@
 
 Name:           python-%{modname}
 Version:        2.3.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Object-oriented filesystem paths
 License:        MIT
 URL:            https://github.com/mcmtroffaes/pathlib2/
@@ -75,6 +75,9 @@ LANG=C.utf8 %{__python2} -m pytest -v tests
 %{python3_sitelib}/%{modname}-%{version}-py?.?.egg-info
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed Jun 20 2018 Miro Hrončok <mhroncok@redhat.com> - 2.3.2-1
 - Update to 2.3.2 (#1569508)
 - Fix FTBFS (#1556245)
