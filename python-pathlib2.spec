@@ -1,5 +1,12 @@
 %global modname	pathlib2
 
+%if 0%{?fedora} || 0%{?rhel} > 7
+%bcond_without python3
+%else
+%bcond_with    python3
+%endif
+
+
 Name:           python-%{modname}
 Version:        2.3.2
 Release:        3%{?dist}
@@ -20,6 +27,9 @@ pathlib can be used also on older Python versions.
 %package -n python2-%{modname}
 Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{modname}}
+%if 0%{?rhel} == 7
+BuildRequires:  python-test
+%endif
 BuildRequires:  python2-devel
 BuildRequires:  python2-mock
 BuildRequires:  python2-pytest
@@ -32,6 +42,7 @@ Requires:  python2-six
 
 Python 2 version.
 
+%if %{with python3}
 %package -n python3-%{modname}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{modname}}
@@ -44,23 +55,30 @@ Requires:  python3-six
 %description -n python3-%{modname} %{_description}
 
 Python 3 version.
+%endif
 
 %prep
 %setup -q -n %{modname}-%{version}
 
 %build
 %py2_build
+%if %{with python3}
 %py3_build
+%endif
 
 %install
 %py2_install
+%if %{with python3}
 %py3_install
+%endif
 
 %check
 # LANG has to be set here because otherwise file system encoding is
 # ANSI_X3.4-1968 by default in mock build
 LANG=C.utf8 %{__python2} -m pytest -v tests
+%if %{with python3}
 %{__python3} -m pytest -v tests
+%endif
 
 %files -n python2-%{modname}
 %doc README.rst
@@ -68,11 +86,13 @@ LANG=C.utf8 %{__python2} -m pytest -v tests
 %{python2_sitelib}/%{modname}/
 %{python2_sitelib}/%{modname}-%{version}-py?.?.egg-info
 
+%if %{with python3}
 %files -n python3-%{modname}
 %doc README.rst
 %license LICENSE.rst
 %{python3_sitelib}/%{modname}/
 %{python3_sitelib}/%{modname}-%{version}-py?.?.egg-info
+%endif
 
 %changelog
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.2-3
